@@ -10,23 +10,31 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.redpin.server.standalone.core.Location;
 import org.redpin.server.standalone.core.Map;
 import org.redpin.server.standalone.db.HomeFactory;
 import org.redpin.server.standalone.json.GsonFactory;
 
-@Path("/map")
-public class MapResource {
+@Path("/location")
+public class LocationResource {
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Map> getAll() {
-         List<Map> listAll = new ArrayList<Map>();
+    public List<Location> getAll() {
+         List<Location> listAll = new ArrayList<Location>();
+         
+         Location loc = new Location();
+         loc.setId(1);
+         loc.setSymbolicID("Room 1");
+         loc.setAccuracy(90);
          
          Map m = new Map();
          m.setId(1);
          m.setMapName("Home");
          m.setMapURL("http://10.12.100.9/mapuploads/home.png");
-                 
-         listAll.add(m);
+         
+         loc.setMap(m);
+         
+         listAll.add(loc);
          
          return listAll;
     }
@@ -34,13 +42,13 @@ public class MapResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map postMap(String jsonRequest) {
+	public Location postLocation(String jsonRequest) {
 				
 		System.out.println(jsonRequest);
 		
-		Map map = GsonFactory.getGsonInstance().fromJson(jsonRequest, Map.class);
-		map = HomeFactory.getMapHome().add(map);
+		Location location = GsonFactory.getGsonInstance().fromJson(jsonRequest, Location.class);
+		location = HomeFactory.getLocationHome().add(location);
 		
-		return map;
+		return location;
 	}
 }

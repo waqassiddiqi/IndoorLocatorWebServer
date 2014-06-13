@@ -30,12 +30,17 @@ import org.redpin.server.standalone.db.IEntity;
 import org.redpin.server.standalone.locator.LocatorHome;
 import java.util.Vector;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 
 /**
  * @see org.redpin.base.core.Measurement
  * @author Pascal Brogle (broglep@student.ethz.ch)
  *
  */
+@XmlType(name="Measurement2")
+@XmlRootElement
 public class Measurement extends org.redpin.base.core.Measurement implements IMeasurement, IEntity<Integer> {
 	
 	

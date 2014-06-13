@@ -26,4 +26,8 @@
 		<servlet-name>Jersey REST Service</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
+	
+	<listener>
+	    <listener-class>org.redpin.server.web.ConfigurationServlet</listener-class>
+	</listener>
 </web-app>

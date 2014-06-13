@@ -34,6 +34,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import org.redpin.server.standalone.db.DatabaseConnection;
@@ -56,7 +57,7 @@ public class Configuration {
 	 * @author Pascal Brogle (broglep@student.ethz.ch)
 	 *
 	 */
-	public enum DatabaseTypes { SQLITE, MYSQL};
+	public enum DatabaseTypes { SQLITE, MYSQL, POSTGRESQL};
 	public static final String ResourcesDir = "/resources/";
 	private static final String SQLite_Schema = ResourcesDir + "redpin_sqlite.sql";
 	
@@ -73,9 +74,9 @@ public class Configuration {
 	public static boolean LogRequests = true;
 	public static String LogRequestPath = "requests/";
 	
-	public static DatabaseTypes DatabaseType = DatabaseTypes.SQLITE;
-	public static String DatabaseLocation = "redpin.db";
-	public static String DatabaseDriver = "org.sqlite.JDBC";
+	public static DatabaseTypes DatabaseType = DatabaseTypes.POSTGRESQL;
+	public static String DatabaseLocation = "//localhost:5432/redpin?user=postgres&password=root";
+	public static String DatabaseDriver = "org.postgresql.Driver";
 	
 	public static String LibSVMDirectory = "libsvm-2.9";
 	public static long SVMTrainRate = TrainSVMTimerTask.DEFAULT_TRAIN_RATE;
@@ -87,6 +88,10 @@ public class Configuration {
 		dir +"/svm-train -c 512 -t 0 -q " + SVMSupport.TRAIN_SCALE + "$1";
 	}
 	
+	public void init() {
+		ResourceBundle res = ResourceBundle.getBundle("redpin");
+		
+	}
 	
 	// initialization
 	static {
@@ -157,6 +162,11 @@ public class Configuration {
 				
 				if(DatabaseType == DatabaseTypes.MYSQL) {
 					DatabaseDriver = "com.mysql.jdbc.Driver";
+					DatabaseLocation = p.getProperty("db.location", DatabaseLocation);
+				}
+				
+				if(DatabaseType == DatabaseTypes.POSTGRESQL) {
+					DatabaseDriver = "org.postgresql.Driver";
 					DatabaseLocation = p.getProperty("db.location", DatabaseLocation);
 				}
 				

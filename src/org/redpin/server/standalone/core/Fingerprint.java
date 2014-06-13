@@ -23,6 +23,7 @@ package org.redpin.server.standalone.core;
 
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.redpin.server.standalone.db.IEntity;
 /**
@@ -30,6 +31,7 @@ import org.redpin.server.standalone.db.IEntity;
  * @author Pascal Brogle (broglep@student.ethz.ch)
  *
  */
+@XmlType(name="Fingerprint2")
 @XmlRootElement
 public class Fingerprint extends org.redpin.base.core.Fingerprint implements IEntity<Integer> {
 	

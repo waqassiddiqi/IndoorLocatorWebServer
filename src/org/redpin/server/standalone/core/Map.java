@@ -22,6 +22,7 @@
 package org.redpin.server.standalone.core;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.redpin.server.standalone.db.IEntity;
 
@@ -30,6 +31,7 @@ import org.redpin.server.standalone.db.IEntity;
  * @author Pascal Brogle (broglep@student.ethz.ch)
  * 
  */
+@XmlType(name="Map2")
 @XmlRootElement
 public class Map extends org.redpin.base.core.Map implements IEntity<Integer> {
 

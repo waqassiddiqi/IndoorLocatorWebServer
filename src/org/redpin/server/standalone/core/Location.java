@@ -21,6 +21,9 @@
  */
 package org.redpin.server.standalone.core;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 import org.redpin.server.standalone.db.IEntity;
 
 /**
@@ -28,6 +31,9 @@ import org.redpin.server.standalone.db.IEntity;
  * @author Pascal Brogle (broglep@student.ethz.ch)
  *
  */
+
+@XmlType(name="Location2")
+@XmlRootElement
 public class Location extends org.redpin.base.core.Location implements IEntity<Integer> {
 
 	private Integer id;
