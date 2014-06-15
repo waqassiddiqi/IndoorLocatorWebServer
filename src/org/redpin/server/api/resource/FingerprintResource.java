@@ -10,37 +10,30 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.redpin.server.standalone.core.Fingerprint;
 import org.redpin.server.standalone.core.Map;
 import org.redpin.server.standalone.db.HomeFactory;
 import org.redpin.server.standalone.json.GsonFactory;
 
-@Path("/map")
-public class MapResource {
-	@GET
+@Path("/fingerprint")
+public class FingerprintResource {
+	/*@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Map> getAll() {
-         List<Map> listAll = new ArrayList<Map>();
-         
-         Map m = new Map();
-         m.setId(1);
-         m.setMapName("Home");
-         m.setMapURL("http://10.12.100.9/mapuploads/home.png");
-                 
-         listAll.add(m);
-         
-         return listAll;
-    }
+		List<Fingerprint> listAll = new ArrayList<Fingerprint>();
+		
+		//Fingerprint p = new Fingerprint();
+		//p.setLocation();
+		//p.set
+    }*/
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map postMap(String jsonRequest) {
-				
-		System.out.println(jsonRequest);
+	public Fingerprint postFingerprint(String jsonRequest) {
+		Fingerprint fingerprint = GsonFactory.getGsonInstance().fromJson(jsonRequest, Fingerprint.class);
+		fingerprint = HomeFactory.getFingerprintHome().add(fingerprint);
 		
-		Map map = GsonFactory.getGsonInstance().fromJson(jsonRequest, Map.class);
-		map = HomeFactory.getMapHome().add(map);
-		
-		return map;
+		return fingerprint;
 	}
 }

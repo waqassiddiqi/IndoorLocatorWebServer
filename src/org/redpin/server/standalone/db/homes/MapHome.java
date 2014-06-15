@@ -187,6 +187,4 @@ public class MapHome extends EntityHome<Map> {
 			throws SQLException {
 		return fillInStatement(ps, new Object[] {t.getMapName(), t.getMapURL()}, new int[]{Types.VARCHAR, Types.VARCHAR}, fromIndex);
 	}
-
-
 }

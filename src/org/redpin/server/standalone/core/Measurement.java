@@ -147,7 +147,4 @@ public class Measurement extends org.redpin.base.core.Measurement implements IMe
 	public boolean equals(Object obj) {
 		return super.equals(obj) || (this.getTimestamp() == ((Measurement)obj).getTimestamp());
 	}
-	
-	
-
 }

@@ -90,6 +90,13 @@ public class Configuration {
 	
 	public void init() {
 		ResourceBundle res = ResourceBundle.getBundle("redpin");
+		LogFile = res.getString("log.file");
+		LogFormat = LoggerFormat.valueOf(res.getString("log.format"));
+		LogLevel = Level.parse(res.getString("log.level"));
+		DatabaseType = DatabaseTypes.valueOf(res.getString("db.type"));
+		DatabaseLocation = res.getString("db.location");
+		DatabaseDriver = res.getString("db.driver");
+		
 		
 	}
 	

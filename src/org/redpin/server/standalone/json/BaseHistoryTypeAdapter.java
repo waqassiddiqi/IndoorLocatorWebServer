@@ -23,7 +23,7 @@ package org.redpin.server.standalone.json;
 
 import java.lang.reflect.Type;
 
-import org.redpin.server.standalone.core.User;
+import org.redpin.server.standalone.core.History;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -40,25 +40,25 @@ import com.google.gson.JsonSerializer;
  * @author Pascal Brogle (broglep@student.ethz.ch)
  *
  */
-public class BaseMapTypeAdapter implements JsonSerializer<org.redpin.base.core.User>,
-		JsonDeserializer<org.redpin.base.core.User> {
+public class BaseHistoryTypeAdapter implements JsonSerializer<org.redpin.base.core.History>,
+		JsonDeserializer<org.redpin.base.core.History> {
 
 	/**
 	 * @see JsonSerializer#serialize(Object, Type, JsonSerializationContext)
 	 */
 	@Override
-	public JsonElement serialize(org.redpin.base.core.User src, Type typeOfSrc,
+	public JsonElement serialize(org.redpin.base.core.History src, Type typeOfSrc,
 			JsonSerializationContext context) {
-		return context.serialize(src, User.class);
+		return context.serialize(src, History.class);
 	}
 
 	/**
 	 * @see JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext)
 	 */
 	@Override
-	public User deserialize(JsonElement json, Type typeOfT,
+	public History deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
-		return context.deserialize(json, User.class);
+		return context.deserialize(json, History.class);
 	}
 
 }

@@ -25,10 +25,12 @@ import org.redpin.server.standalone.db.homes.BluetoothReadingHome;
 import org.redpin.server.standalone.db.homes.EntityHome;
 import org.redpin.server.standalone.db.homes.FingerprintHome;
 import org.redpin.server.standalone.db.homes.GSMReadingHome;
+import org.redpin.server.standalone.db.homes.HistoryHome;
 import org.redpin.server.standalone.db.homes.LocationHome;
 import org.redpin.server.standalone.db.homes.MapHome;
 import org.redpin.server.standalone.db.homes.MeasurementHome;
 import org.redpin.server.standalone.db.homes.ReadingInMeasurementHome;
+import org.redpin.server.standalone.db.homes.UserHome;
 import org.redpin.server.standalone.db.homes.WiFiReadingHome;
 import org.redpin.server.standalone.db.homes.vector.BluetoothReadingVectorHome;
 import org.redpin.server.standalone.db.homes.vector.GSMReadingVectorHome;
@@ -49,6 +51,22 @@ public class HomeFactory {
 			mapHome = new MapHome();
 		}		
 		return mapHome;
+	}
+	
+	private static UserHome userHome = null;
+	public synchronized static UserHome getUserHome() {
+		if(userHome == null) {
+			userHome = new UserHome();
+		}		
+		return userHome;
+	}
+	
+	private static HistoryHome historyHome = null;
+	public synchronized static HistoryHome getHistoryHome() {
+		if(historyHome == null) {
+			historyHome = new HistoryHome();
+		}		
+		return historyHome;
 	}
 	
 	private static LocationHome locHome = null;

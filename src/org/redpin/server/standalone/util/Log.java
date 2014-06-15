@@ -75,8 +75,5 @@ public class Log {
 		
 		return logger;
 		
-	}
-	
-
-	
+	}	
 }
