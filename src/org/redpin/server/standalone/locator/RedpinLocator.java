@@ -24,6 +24,7 @@ package org.redpin.server.standalone.locator;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.TreeSet;
@@ -60,7 +61,7 @@ public class RedpinLocator implements ILocator {
 	public static final int LOCATION_UNKNOWN = 0;
 	public static int LOCATION_THRESHOLD = 2;
 	
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	
 	public RedpinLocator() {
@@ -133,6 +134,13 @@ public class RedpinLocator implements ILocator {
 		}
 		
 		if (hits.size() > 0) {
+			
+			Iterator<Measurement> itr = hits.iterator();
+			while(itr.hasNext()) {
+				int acc = measurementSimilarityLevel(itr.next(), currentMeasurement);
+				
+				System.out.println(acc);
+			}
 			
 			Measurement bestMatch = hits.first();
 			
