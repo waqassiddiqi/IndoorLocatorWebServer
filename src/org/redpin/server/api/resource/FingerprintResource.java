@@ -12,15 +12,6 @@ import org.redpin.server.standalone.json.GsonFactory;
 
 @Path("/fingerprint")
 public class FingerprintResource {
-	/*@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Map> getAll() {
-		List<Fingerprint> listAll = new ArrayList<Fingerprint>();
-		
-		//Fingerprint p = new Fingerprint();
-		//p.setLocation();
-		//p.set
-    }*/
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
