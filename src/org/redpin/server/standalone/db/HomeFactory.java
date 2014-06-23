@@ -30,6 +30,7 @@ import org.redpin.server.standalone.db.homes.LocationHome;
 import org.redpin.server.standalone.db.homes.MapHome;
 import org.redpin.server.standalone.db.homes.MeasurementHome;
 import org.redpin.server.standalone.db.homes.ReadingInMeasurementHome;
+import org.redpin.server.standalone.db.homes.TaskHome;
 import org.redpin.server.standalone.db.homes.UserHome;
 import org.redpin.server.standalone.db.homes.WiFiReadingHome;
 import org.redpin.server.standalone.db.homes.vector.BluetoothReadingVectorHome;
@@ -67,6 +68,14 @@ public class HomeFactory {
 			historyHome = new HistoryHome();
 		}		
 		return historyHome;
+	}
+	
+	private static TaskHome taskHome = null;
+	public synchronized static TaskHome getTaskHome() {
+		if(taskHome == null) {
+			taskHome = new TaskHome();
+		}		
+		return taskHome;
 	}
 	
 	private static LocationHome locHome = null;

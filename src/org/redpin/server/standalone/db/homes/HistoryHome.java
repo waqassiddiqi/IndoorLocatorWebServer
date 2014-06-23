@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 import org.redpin.server.standalone.core.History;
 import org.redpin.server.standalone.core.Location;
+import org.redpin.server.standalone.core.Task;
 import org.redpin.server.standalone.core.User;
 import org.redpin.server.standalone.db.HomeFactory;
 
@@ -19,7 +20,7 @@ import org.redpin.server.standalone.db.HomeFactory;
  */
 
 public class HistoryHome extends EntityHome<History> {
-	private static final String[] TableCols = {"userId", "locationId", "date"};
+	private static final String[] TableCols = {"userId", "locationId", "date", "taskId"};
 	private static final String TableName = "history"; 
 	private static final String TableIdCol = "historyId";
 	
@@ -61,13 +62,18 @@ public class HistoryHome extends EntityHome<History> {
 		try {
 			history.setId(rs.getInt(fromIndex));
 			history.setDate(rs.getDate(fromIndex + 3));
+			int taskId = rs.getInt(fromIndex + 4);
 			
-			User user = HomeFactory.getUserHome().parseResultRow(rs, fromIndex + 4);
+			if(rs.wasNull() == false) {
+				Task task = HomeFactory.getTaskHome().getById(taskId);
+				history.setTask(task);
+			}
+			
+			User user = HomeFactory.getUserHome().parseResultRow(rs, fromIndex + 5);
 			history.setUser(user);
 			
-			Location location = HomeFactory.getLocationHome().parseResultRow(rs, fromIndex + 7);
+			Location location = HomeFactory.getLocationHome().parseResultRow(rs, fromIndex + 8);
 			history.setLocation(location);
-			
 		
 		} catch (SQLException e) {
 			log.log(Level.SEVERE, "parseResultRow failed: " + e.getMessage(), e);
@@ -93,12 +99,16 @@ public class HistoryHome extends EntityHome<History> {
 	 */
 	@Override
 	protected String getSelectSQL() {
-		return "SELECT " + getTableColNames() + ", " + HomeFactory.getUserHome().getTableColNames() + ", "
+		String strSql = "SELECT " + getTableColNames() + ", " + HomeFactory.getUserHome().getTableColNames() + ", "
 				+ HomeFactory.getLocationHome().getTableColNames() + ", "
-				+ HomeFactory.getMapHome().getTableColNames() + " FROM " + getTableName() 
+				+ HomeFactory.getMapHome().getTableColNames() +  " FROM " + getTableName() 
 				+ " INNER JOIN user ON history.userId = user.userId "
 				+ " INNER JOIN location ON location.locationId = history.locationId"
 				+ " INNER JOIN map ON location.mapId = map.mapId";
+		
+		System.out.println(strSql);
+		
+		return strSql;
 	}
 	
 	@Override
