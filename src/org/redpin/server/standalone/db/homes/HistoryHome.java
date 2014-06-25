@@ -60,7 +60,7 @@ public class HistoryHome extends EntityHome<History> {
 		
 		try {
 			history.setId(rs.getInt(fromIndex));
-			history.setDate(rs.getDate(fromIndex + 3));
+			history.setDate(rs.getTimestamp(fromIndex + 3));
 			
 			User user = HomeFactory.getUserHome().parseResultRow(rs, fromIndex + 4);
 			history.setUser(user);
@@ -84,6 +84,17 @@ public class HistoryHome extends EntityHome<History> {
 	public List<History> getByUserId(int id) {
 		String constraint = "";
 		if (id != -1) constraint += " user.userId = " + id;
+		
+		return get(constraint);
+	}
+	
+	public List<History> getLastKnownHistoryByMapId(int id) {
+		String constraint = "";
+		
+		if (id != -1) 
+			constraint += " map.mapId = " + id;
+		
+		this.order = "user.userId, history.date";
 		
 		return get(constraint);
 	}

@@ -59,6 +59,7 @@ public abstract class EntityHome<T extends IEntity<Integer>> implements IEntityH
 	protected String updateSQL = null;
 	protected String selectSQL = null;
 	protected String deleteSQL = null;
+	protected String order = "";
 	
 	public EntityHome() {
 		this.db = DatabaseConnection.getInstance();
@@ -164,7 +165,7 @@ public abstract class EntityHome<T extends IEntity<Integer>> implements IEntityH
 	 * @return SQL ORDER BY string
 	 */
 	protected String getOrder() {
-		return "";
+		return this.order;
 	}
 	
 	/**
