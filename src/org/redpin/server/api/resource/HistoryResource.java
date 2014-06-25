@@ -16,7 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.redpin.server.standalone.core.History;
-import org.redpin.server.standalone.core.User;
 import org.redpin.server.standalone.db.HomeFactory;
 import org.redpin.server.standalone.json.GsonFactory;
 
@@ -57,12 +56,11 @@ public class HistoryResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User postUser(String jsonRequest) {
+	public History postHistory(String jsonRequest) {
 		
-		User user = GsonFactory.getGsonInstance().fromJson(jsonRequest, User.class);
-		user = HomeFactory.getUserHome().add(user);
+		History history = GsonFactory.getGsonInstance().fromJson(jsonRequest, History.class);
+		history = HomeFactory.getHistoryHome().add(history);
 		
-		return user;
+		return history;
 	}
-	
 }

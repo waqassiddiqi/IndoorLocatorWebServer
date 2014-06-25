@@ -62,7 +62,7 @@ public class LocationResource {
 			loc.setId(-1);
 			
 		} else {
-			
+			/*
 			User u = new User();
 			u.setName("Test User");
 			u.setUserName("user1");
@@ -88,6 +88,7 @@ public class LocationResource {
 			h.setDate(new Date());
 			
 			HomeFactory.getHistoryHome().add(h);
+			*/
 			
 			log.finer("location found: " + loc + " accuracy: " + loc.getAccuracy());
 		}
