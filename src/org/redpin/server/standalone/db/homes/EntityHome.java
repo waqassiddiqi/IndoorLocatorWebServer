@@ -348,6 +348,29 @@ public abstract class EntityHome<T extends IEntity<Integer>> implements IEntityH
 	
 	/* get */
 	
+	protected ResultSet getResultSet(String constraint) {
+		
+		
+		String sql = getSelectSQL();
+		if (constraint != null && constraint.length() > 0) sql += " WHERE " + constraint;
+		String order = getOrder();
+		if (order != null && order.length() > 0) sql += " ORDER BY " + order;
+		
+		
+		log.finest(sql);
+		ResultSet rs = null;
+		Statement stat = null;
+		try {
+			stat = db.getConnection().createStatement();
+			rs = stat.executeQuery(sql);
+			
+		} catch (SQLException e) {
+			log.log(Level.SEVERE, "get failed: " + e.getMessage(), e);
+		}
+		
+		return rs;
+	}
+	
 	/**
 	 * Gets entities from database matching a constraint
 	 * 
@@ -369,6 +392,7 @@ public abstract class EntityHome<T extends IEntity<Integer>> implements IEntityH
 		try {
 			stat = db.getConnection().createStatement();
 			rs = stat.executeQuery(sql);
+			
 			while(rs.next()) {
 				res.add(parseResultRow(rs));
 			}

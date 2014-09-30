@@ -31,7 +31,7 @@
 			+ request.getServerPort() + request.getContextPath() %>/api/map/<%= request.getParameter("mapId") %>';
 			
 		var trackingUrl = '<%= request.getScheme() + "://" + request.getServerName() + ":" 
-			+ request.getServerPort() + request.getContextPath() %>/api/history/live/<%= request.getParameter("mapId") %>';
+			+ request.getServerPort() + request.getContextPath() %>/api/location/map/<%= request.getParameter("mapId") %>';
 	
 			
 		var naturalWidth;
@@ -43,7 +43,7 @@
 				console.log(data);
 				
 				if(data) {
-					document.title = 'Live Tracking - ' + data.mapName;
+					document.title = 'Locations on Map - ' + data.mapName;
 					$('#image').attr('src', 'mapuploads/' + data.mapURL);
 					
 					
@@ -62,35 +62,29 @@
 				if(data) {
 					
 					var arr = [];
-					var point = 0.2;
-					var index = 1;
 					
-					console.log($.isArray(data.history));
+					console.log($.isArray(data.location));
 					
-					if($.isArray(data.history) == false ) {
+					if($.isArray(data.location) == false ) {
 						
-						console.log(data.history);
+						console.log(data.location);
 						
 						arr.push({
-					        x: data.history.location.mapXcord / image.naturalWidth,
-					        y: data.history.location.mapYcord / image.naturalHeight,
-					        note: '<center><b>' + data.history.user.name + '</b><br/></center>Task: <br/><span "text-size:1pt">Last seen: ' + data.history.date + '</span>'	
+					        x: data.location.mapXcord / image.naturalWidth,
+					        y: data.location.mapYcord / image.naturalHeight,
+					        note: '<center><b>' + data.location.symbolicID + '</b></center>'	
 					    });
 						
 					} else {
-						for(h in data.history) {
-							console.log(data.history[h]);
-							
-							//alert(data.history[h].location.mapXcord);
-							//alert(image.naturalWidth);
-							//alert(data.history[h].location.mapXcord / image.naturalWidth);
+						for(h in data.location) {
+							console.log(data.location[h]);
 							
 							arr.push({
-						        x: data.history[h].location.mapXcord / image.naturalWidth,
-						        y: data.history[h].location.mapYcord / image.naturalHeight,
-						        note: '<center><b>' + data.history[h].user.name + '</b><br/></center>Task: <br/><span "text-size:1pt">Last seen: ' + data.history[h].date + '</span>'	
+						        x: data.location[h].mapXcord / image.naturalWidth,
+						        y: data.location[h].mapYcord / image.naturalHeight,
+						        note: '<center><b>' + data.location[h].symbolicID + '</b></center>'	
 						    });
-						}	
+						}
 					}
 					
 					

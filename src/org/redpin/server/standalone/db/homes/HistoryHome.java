@@ -126,7 +126,11 @@ public class HistoryHome extends EntityHome<History> {
 	@Override
 	public int fillInStatement(PreparedStatement ps, History h, int fromIndex)
 			throws SQLException {
-		return fillInStatement(ps, new Object[] { ((Location) h.getLocation()).getId() , 
-				((User) h.getUser()).getId(), h.getDate() }, new int[]{Types.VARCHAR, Types.VARCHAR}, fromIndex);
+		return fillInStatement(ps, new Object[] { 
+				((User) h.getUser()).getId(), 
+				((Location) h.getLocation()).getId(), 
+				h.getDate(),
+				((Task) h.getTask()).getId()
+		}, new int[]{Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.INTEGER}, fromIndex);
 	}
 }

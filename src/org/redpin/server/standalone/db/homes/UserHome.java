@@ -15,7 +15,7 @@ import org.redpin.server.standalone.core.User;
  */
 
 public class UserHome extends EntityHome<User> {
-	private static final String[] TableCols = {"userName", "name"};
+	private static final String[] TableCols = {"userName", "name", "password"};
 	private static final String TableName = "user"; 
 	private static final String TableIdCol = "userId";
 	
@@ -58,6 +58,7 @@ public class UserHome extends EntityHome<User> {
 			user.setId(rs.getInt(fromIndex));
 			user.setUserName(rs.getString(fromIndex + 1));
 			user.setName(rs.getString(fromIndex + 2));
+			user.setPassword(rs.getString(fromIndex + 3));
 		
 		} catch (SQLException e) {
 			log.log(Level.SEVERE, "parseResultRow failed: " + e.getMessage(), e);
@@ -70,6 +71,8 @@ public class UserHome extends EntityHome<User> {
 	@Override
 	public int fillInStatement(PreparedStatement ps, User u, int fromIndex)
 			throws SQLException {
-		return fillInStatement(ps, new Object[] {u.getUserName(), u.getName()}, new int[]{Types.VARCHAR, Types.VARCHAR}, fromIndex);
+		return fillInStatement(ps, new Object[] { 
+				u.getUserName(), u.getName(), u.getPassword() }, 
+			new int[]{ Types.VARCHAR, Types.VARCHAR, Types.VARCHAR }, fromIndex);
 	}
 }

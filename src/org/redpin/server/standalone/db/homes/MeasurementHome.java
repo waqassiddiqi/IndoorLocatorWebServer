@@ -27,11 +27,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import org.redpin.server.standalone.core.Measurement;
 import org.redpin.server.standalone.core.Vector;
+import org.redpin.server.standalone.core.measure.WiFiReading;
 import org.redpin.server.standalone.db.HomeFactory;
 
 public class MeasurementHome extends EntityHome<Measurement> {
@@ -124,9 +126,61 @@ public class MeasurementHome extends EntityHome<Measurement> {
 
 	}
 	
+	@Override
+	public List<Measurement> getAll() {
+		
+		ResultSet rs = null;
+		int lastId = -1;
+		Measurement m = null;
+		List<Measurement> list = new ArrayList<Measurement>();
+		String readingClassName;
+		
+		try {
+			
+			rs = this.getResultSet("");
+			
+			while(rs.next()) {
+				int mId = rs.getInt(1);
+				
+				if(mId != lastId) {
+					
+					m = new Measurement();
+					m.setId(mId);
+					lastId = mId;
+					
+					list.add(m);
+				}
+			
+				readingClassName = rs.getString(3);
+				if (HomeFactory.getWiFiReadingVectorHome().getContainedObjectClassName().equals(readingClassName)) {
+					WiFiReading reading = new WiFiReading();
+					reading.setId(rs.getInt(4));
+					reading.setBssid(rs.getString(5));
+					
+					reading.setInfrastructure(rs.getBoolean(9));
+					reading.setRssi(rs.getInt(7));
+					reading.setSsid(rs.getString(6));
+					reading.setWepEnabled(rs.getBoolean(8));
+					
+					m.addWiFiReading(reading);
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "get failed: " + e.getMessage(), e);
+		} finally {
+			try {
+				if (rs != null) rs.close();
+			} catch (SQLException es) {
+				log.log(Level.WARNING, "failed to close ResultSet: " + es.getMessage(), es);
+			}
+		}
+		
+		return list;
+	}
 	
 	
-
 	@Override
 	public Measurement getById(Integer id) {
 		String constraint = getTableName() + "." + getTableIdCol() + " = " + id;

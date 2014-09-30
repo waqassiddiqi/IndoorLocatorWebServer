@@ -50,7 +50,9 @@ public class GsonFactory {
 			builder.registerTypeAdapter(org.redpin.base.core.Fingerprint.class, new BaseFingerprintTypeAdapter());
 			builder.registerTypeAdapter(org.redpin.base.core.Location.class, new BaseLocationTypeAdapter());
 			builder.registerTypeAdapter(org.redpin.base.core.Map.class, new BaseMapTypeAdapter());
+			builder.registerTypeAdapter(org.redpin.base.core.User.class, new BaseUserTypeAdapter());
 			builder.registerTypeAdapter(org.redpin.base.core.Measurement.class, new BaseMeasurementTypeAdapter());
+			builder.registerTypeAdapter(org.redpin.base.core.Task.class, new BaseTaskTypeAdapter());
 			
 			//needed in order to deserialize proper the measurement vectors
 			builder.registerTypeAdapter(Measurement.class, new MeasurementTypeAdapter());

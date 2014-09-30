@@ -1,6 +1,5 @@
 package org.redpin.server.api.resource;
 
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -8,13 +7,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.redpin.server.standalone.core.History;
 import org.redpin.server.standalone.core.Location;
 import org.redpin.server.standalone.core.Measurement;
-import org.redpin.server.standalone.core.User;
 import org.redpin.server.standalone.db.HomeFactory;
 import org.redpin.server.standalone.json.GsonFactory;
 import org.redpin.server.standalone.locator.LocatorHome;
@@ -30,6 +28,13 @@ public class LocationResource {
     public List<Location> getAll() {
 		return HomeFactory.getLocationHome().getAll();
     }
+	
+	@GET
+	@Path("/map/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Location> getLocationByMapId(@PathParam("id") String id) {
+		return HomeFactory.getLocationHome().getListByMapId(Integer.parseInt(id));
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

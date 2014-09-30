@@ -22,6 +22,7 @@
 package org.redpin.server.standalone.locator;
 
 import org.redpin.server.standalone.svm.SVMSupport;
+import org.redpin.server.standalone.util.Configuration;
 
 /**
  * Factory for {@link ILocator}
@@ -36,7 +37,13 @@ public class LocatorHome {
 	
 	public synchronized static ILocator getLocator() {
 		if(locator == null) {
-			locator = new RedpinLocator();
+			try {
+				locator = (ILocator) Class.forName(Configuration.locatorClass).newInstance();
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				locator = new RedpinLocator();
+			}
 		}
 		
 		if (locator instanceof RedpinLocator) {

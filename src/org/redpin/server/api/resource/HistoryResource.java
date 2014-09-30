@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.redpin.server.standalone.core.History;
+import org.redpin.server.standalone.core.Task;
 import org.redpin.server.standalone.db.HomeFactory;
 import org.redpin.server.standalone.json.GsonFactory;
 
@@ -59,6 +60,15 @@ public class HistoryResource {
 	public History postHistory(String jsonRequest) {
 		
 		History history = GsonFactory.getGsonInstance().fromJson(jsonRequest, History.class);
+		
+		Task t = new Task();
+		t.setComment(history.getTask().getComment());
+		t.setJobStatus(history.getTask().getJobStatus());
+		t.setPriority(history.getTask().getPriority());
+		t.setTransportType(history.getTask().getTransportType());
+		
+		history.setTask(HomeFactory.getTaskHome().add((t)));
+		
 		history = HomeFactory.getHistoryHome().add(history);
 		
 		return history;

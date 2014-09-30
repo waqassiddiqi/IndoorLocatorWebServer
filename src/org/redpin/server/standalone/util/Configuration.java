@@ -81,6 +81,7 @@ public class Configuration {
 	public static String LibSVMDirectory = "libsvm-2.9";
 	public static long SVMTrainRate = TrainSVMTimerTask.DEFAULT_TRAIN_RATE;
 	
+	public static String locatorClass = "org.redpin.server.standalone.locator.RedpinLocator";
 	
 	private static String generateTrainScript(String dir) {
 		return "#!/bin/sh \n"+
@@ -97,7 +98,7 @@ public class Configuration {
 		DatabaseLocation = res.getString("db.location");
 		DatabaseDriver = res.getString("db.driver");
 		
-		
+		locatorClass = res.getString("locator");
 	}
 	
 	// initialization
